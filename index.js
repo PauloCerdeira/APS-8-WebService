@@ -1,7 +1,7 @@
 const express = require("express");
 // const { con } = require("./db/db.js");
 const app = express();
-const port = 3000;
+const localPort = 3000;
 
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -13,6 +13,12 @@ app.use(cors());
 // con.query(
 //   `INSERT INTO Consumos (voltagem, corrente, potencia, dataHora) VALUES (${req.query.voltagem} , ${req.query.corrente} , ${req.query.potencia}, "${dataHora}")`
 // );
+
+app.get("/", (req, res) => {
+  //trazer denuncias
+  res.header("Access-Control-Allow-Origin", "*");
+  res.send("FUNCIONA PORRA");
+});
 
 app.post("/denuncia", (req, res) => {
   //salvar denuncia em um banco de dados e retornar o status
@@ -31,6 +37,6 @@ app.get("/gerenciamento", (req, res) => {
   res.send({ algo: true });
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT ? process.env.PORT : localPort, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
